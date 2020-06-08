@@ -1,14 +1,77 @@
-req=new XMLHttpRequest();
-req.open("GET",'stuBackList.json',true);
-req.send();
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function(){};
+xhr.open('GET','stuBackList.json');
+xhr.send();
 
-req.onload=function(){
-  json=JSON.parse(req.responseText);
-  JSON.stringify(json);
-  window.alert(json[json.length - 1]);
+xhr.onload=function(){
+  jsonList=JSON.parse(xhr.responseText);
+  JSON.stringify(jsonList);
+
+  printValue(jsonList);
+
+  printPagesNum(jsonList)
 };
 
+function printValue(json){
+  var studentPage = 
+  `<div class="page-header cf">
+  <h2>Students</h2>
+  </div><ul class="student-list">`;
 
+    for (let i = 0; i < json.length - 1; i++){
+
+     studentPage += 
+    `<li class="student-item cf">
+    <div class="student-details">
+        <img class="avatar" src=${json[i].avatar}>
+        <h3>${json[i].name}</h3>
+        <span class="email">${json[i].email}</span>
+    </div>
+    <div class="joined-details">
+          <span class="date">${json[i].joined}</span>
+    </div>
+    </li>`
+    }
+    studentPage += `</ul></div>`;
+    document.getElementsByClassName("page-header cf")[0].innerHTML = studentPage;
+}
+
+function printPagesNum(json){
+    var student = `<div class="pagination">
+    <ul>`;
+
+      for (let i = 1; i <= (json[json.length - 1]) ; i++){
+        student += `<li><a id="${i}" href="/${i}">${i}</a></li>`;
+      }
+      student += `</ul></div>`;
+      document.getElementsByClassName("pagination")[0].innerHTML = student;
+      console.log(json[json.length - 1]);
+}
+
+
+
+
+/*
+<div class="pagination">
+        <ul>
+          <li>
+            <a id="one" href="/one">1</a>
+          </li>
+           <li>
+            <a href="#">2</a>
+          </li>
+           <li>
+            <a href="#">3</a>
+          </li>
+           <li>
+            <a href="#">4</a>
+          </li>
+           <li>
+            <a href="#">5</a>
+          </li>
+        </ul>
+      </div>
+*/
 
 
 
@@ -22,9 +85,6 @@ req.onload=function(){
    will only be used inside of a function, then it can be locally 
    scoped to that function.
 ***/
-
-
-
 
 /*** 
    Create the `showPage` function to hide all of the items in the 
@@ -53,9 +113,4 @@ req.onload=function(){
 
 
 
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
-
-
-
-
-
+//Remember to delete the comments that came with this file, and replace them with your own code comments
