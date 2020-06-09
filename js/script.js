@@ -48,9 +48,6 @@ function printPagesNum(json){
       console.log(json[json.length - 1]);
 }
 
-
-
-
 /*
 <div class="pagination">
         <ul>
