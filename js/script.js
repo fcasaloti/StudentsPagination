@@ -1,8 +1,10 @@
+//Declare constants and import JSON file that is sent from server
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function(){};
 xhr.open('GET','stuBackList.json');
 xhr.send();
 
+//Function to convert data from JSON
 xhr.onload=function(){
   jsonList=JSON.parse(xhr.responseText);
   JSON.stringify(jsonList);
@@ -12,6 +14,7 @@ xhr.onload=function(){
   printPagesNum(jsonList)
 };
 
+//Function to write Students Name dynamically
 function printValue(json){
   var studentPage = 
   `<div class="page-header cf">
@@ -36,78 +39,15 @@ function printValue(json){
     document.getElementsByClassName("page-header cf")[0].innerHTML = studentPage;
 }
 
+//Function to print numbers of pages dynamically
 function printPagesNum(json){
-    var student = `<div class="pagination">
-    <ul>`;
+  var student = `<div class="pagination">
+  <ul>`;
 
-      for (let i = 1; i <= (json[json.length - 1]) ; i++){
-        student += `<li><a id="${i}" href="/${i}">${i}</a></li>`;
-      }
-      student += `</ul></div>`;
-      document.getElementsByClassName("pagination")[0].innerHTML = student;
-      console.log(json[json.length - 1]);
+    for (let i = 1; i <= (json[json.length - 1]) ; i++){
+      student += `<li><form method="POST" action="/"><input type="hidden" id="${i}" name="data" value="${i - 1}">${i}
+      <button type="submit" id="${i}" name="submit"></button></form></li>`;
+    }
+    student += `</ul></div>`;
+    document.getElementsByClassName("pagination")[0].innerHTML = student;
 }
-
-/*
-<div class="pagination">
-        <ul>
-          <li>
-            <a id="one" href="/one">1</a>
-          </li>
-           <li>
-            <a href="#">2</a>
-          </li>
-           <li>
-            <a href="#">3</a>
-          </li>
-           <li>
-            <a href="#">4</a>
-          </li>
-           <li>
-            <a href="#">5</a>
-          </li>
-        </ul>
-      </div>
-*/
-
-
-
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
-
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
-
-
-
-
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
-
-
-
-
-
-//Remember to delete the comments that came with this file, and replace them with your own code comments

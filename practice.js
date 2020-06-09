@@ -16,7 +16,20 @@ let database = JSON.parse(rawdata);
 var numStu = database.students.length;
 var page = 0;
 
+//Receive POST from HTML, get data of which page was clicked and call function to create the data
+app.post("/",(req,res) => {
+        page = req.body.data;
+        createJSON(page)
+        res.sendFile(__dirname + "/index.html");
+});
 
+//Router to the roor folder
+app.get('/',(req,res) =>{
+    res.sendFile(__dirname + "/index.html");
+})
+
+
+//Function to create JSON file
 function createJSON(page){
     var studentsList = [];
     let i = 0;
@@ -29,43 +42,12 @@ function createJSON(page){
         studentsList[i] = database.students[indexNum];
         i++;
     }
-    studentsList.push(Math.round(database.students.length / 10));
+    studentsList.push(Math.ceil(database.students.length / 10));
     var studentsString = JSON.stringify(studentsList);
     fs.writeFile("stuBackList.json", studentsString, function(err,result){
         if(err) console.log('error',err)
-});
-
-    //studentsList[studentsList.length] = Math.round(database.students.length / 10);
-
+    });
 };
-
-
-var pages = database.students.length / 10;
-
-app.get('/',(req,res) =>{
-    res.sendFile(__dirname + "/index.html");
-    page = 0;
-    createJSON(page)
-    console.log(page);
-
-})
-
-/*
-app.get('/1',(req,res) =>{
-    res.sendFile(__dirname + "/index.html");
-    page = 0;
-    createJSON(page)
-    //console.log(page);
-})
-
-
-app.get("/2",(req,res) =>{
-    res.sendFile(__dirname + "/index.html");
-    page = 1;
-    createJSON(page)
-    //console.log(page);
- })
-*/
 
 //Listening port
 app.listen(port, () => console.log(`Listening port ${port}`));

@@ -101,10 +101,10 @@ body{
 }
  
   .pagination li{
-    display: inline;
-  }
+    display: inline-table;
+    }
 
-    .pagination li a{
+    .pagination li form button{
       border: 1px solid #eaeaea;
       border-radius: 5px;
       padding: 3px 8px;
@@ -112,8 +112,8 @@ body{
       color: #4ba6c3;
     }
 
-    .pagination li a.active,
-    .pagination li a:hover{
+    .pagination li form button.active,
+    .pagination li form button:hover{
       background-color: #4ba6c3;
       color: #fff;
     }
