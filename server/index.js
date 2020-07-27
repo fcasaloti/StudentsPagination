@@ -4,14 +4,15 @@ const app = express();
 const port = 3000;
 const fs = require('fs');
 const bodyParser = require("body-parser");
+const path = require('path');
 
 //Set the use of some functionalities
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/'));
+app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 
 //Open the JSON database file
-let rawdata = fs.readFileSync('database.json');
+let rawdata = fs.readFileSync(path.join(__dirname, '../db', 'database.json'));
 let database = JSON.parse(rawdata);
 
 //Managing POST request
@@ -25,7 +26,7 @@ app.post("/", (req, res) => {
 
 //Router to the root folder
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(path.join(__dirname, '../public/view/', 'index.html'));
 })
 
 
